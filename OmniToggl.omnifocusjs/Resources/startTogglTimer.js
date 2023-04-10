@@ -62,7 +62,10 @@
       }
       console.log('pid is: ', pid);
 
-      const taskTags = source.tags.map((t) => t.name);
+      let taskTags = source.tags.map((t) => t.name);
+      taskTags.push(`${source.duration > 0 ? source.duration : 15}m`);
+
+
 
       try {
         const r = await startTogglTimer({
