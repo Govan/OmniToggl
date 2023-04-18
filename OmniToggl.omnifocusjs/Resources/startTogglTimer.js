@@ -40,7 +40,7 @@
       }
 
       const toggleProject = (projects || []).find(
-        (p) => p.name.trim().toLowerCase() === projectName.trim().toLowerCase(),
+        (p) => p.name.trim().toLowerCase() === projectName.trim().toLowerCase()
       );
 
       const taskName = source.name;
@@ -65,11 +65,11 @@
       let taskTags = source.tags.map((t) => t.name);
       taskTags.push(`${source.duration > 0 ? source.duration : 15}m`);
 
-
-
       try {
         const r = await startTogglTimer({
           description: taskName,
+          duration: Math.floor(-1 * Date.now()/1000),
+          start: new Date().toISOString(),
           created_with: 'omnifocus',
           tags: taskTags,
           pid,

@@ -3,6 +3,8 @@
 (() => {
   // Replace the string below with your API Token found here: https://track.toggl.com/profile
   const TOGGL_AUTH_TOKEN = 'REPLACE_ME';
+  // Time entries must be assigned to a workspace
+  const TOGGL_WORKSPACE_ID = 'REPLACE_ME_TOO';
   // Name of the tag we use to assign what you're working on
   // (this makes it easier to reset the changes made to the name)
   const TRACKING_TAG_NAME = 'working-on';
@@ -10,7 +12,8 @@
   // Replace this if you would like something different
   const TRACKING_NAME_PREFIX = '🎯';
 
-  const TOGGL_URL = 'https://api.track.toggl.com/api/v8';
+  const TOGGL_URL = 'https://api.track.toggl.com/api/v9/';
+  const TOGGL_WORKSPACED_URL = `${TOGGL_URL}workspaces/${TOGGL_WORKSPACE_ID}`;
 
   // the following is a pollyfill for base64 taken from https://github.com/MaxArt2501/base64-js/blob/master/base64.js
   function btoa(stringParam) {
@@ -55,10 +58,9 @@
     timeEntry,
   ) {
     const fetchRequest = new URL.FetchRequest();
+    timeEntry.wid = parseInt(TOGGL_WORKSPACE_ID);
     fetchRequest.bodyData = Data.fromString(
-      JSON.stringify({
-        time_entry: timeEntry,
-      }),
+      JSON.stringify(timeEntry)
     );
     fetchRequest.method = 'POST';
     fetchRequest.headers = {
@@ -66,7 +68,7 @@
       'Content-Type': 'application/json',
     };
     fetchRequest.url = URL.fromString(
-      `${TOGGL_URL}/time_entries/start`,
+      `${TOGGL_WORKSPACED_URL}/time_entries`
     );
     const r = await fetchRequest.fetch();
 
@@ -74,7 +76,7 @@
       throw buildErrorObject(r);
     }
 
-    return JSON.parse(r.bodyString).data;
+    return JSON.parse(r.bodyString);
   };
 
   dependencyLibrary.getCurrentTogglTimer = async function getCurrentTogglTimer() {
@@ -86,7 +88,7 @@
       'Content-Type': 'application/json',
     };
     fetchRequest.url = URL.fromString(
-      `${TOGGL_URL}/time_entries/current`,
+      `${TOGGL_URL}me/time_entries/current`
     );
     const r = await fetchRequest.fetch();
 
@@ -94,19 +96,19 @@
       throw buildErrorObject(r);
     }
 
-    return JSON.parse(r.bodyString).data;
+    return JSON.parse(r.bodyString);
   };
 
   dependencyLibrary.stopTogglTimer = async function stopTogglTimer(id) {
     const fetchRequest = new URL.FetchRequest();
 
-    fetchRequest.method = 'PUT';
+    fetchRequest.method = 'PATCH';
     fetchRequest.headers = {
       Authorization: AuthHeader,
       'Content-Type': 'application/json',
     };
     fetchRequest.url = URL.fromString(
-      `${TOGGL_URL}/time_entries/${id}/stop`,
+      `${TOGGL_WORKSPACED_URL}/time_entries/${id}/stop`
     );
     const r = await fetchRequest.fetch();
 
@@ -114,7 +116,7 @@
       throw buildErrorObject(r);
     }
 
-    return JSON.parse(r.bodyString).data;
+    return JSON.parse(r.bodyString);
   };
 
   dependencyLibrary.createTogglProject = async function createTogglProject(
@@ -122,7 +124,7 @@
   ) {
     const fetchRequest = new URL.FetchRequest();
     fetchRequest.bodyData = Data.fromString(
-      JSON.stringify({ project: { name } }),
+      JSON.stringify({ name: name, active: true }),
     );
     fetchRequest.method = 'POST';
     fetchRequest.headers = {
@@ -130,7 +132,7 @@
       'Content-Type': 'application/json',
     };
     fetchRequest.url = URL.fromString(
-      `${TOGGL_URL}/projects`,
+      `${TOGGL_WORKSPACED_URL}/projects`,
     );
     const r = await fetchRequest.fetch();
 
@@ -138,7 +140,7 @@
       throw buildErrorObject(r);
     }
 
-    return JSON.parse(r.bodyString).data;
+    return JSON.parse(r.bodyString);
   };
 
   dependencyLibrary.getTogglProjects = async function getTogglProjects() {
@@ -149,15 +151,16 @@
       'Content-Type': 'application/json',
     };
     fetchRequest.url = URL.fromString(
-      `${TOGGL_URL}/me?with_related_data=true`,
+      `${TOGGL_WORKSPACED_URL}/projects`,
     );
+
     const r = await fetchRequest.fetch();
 
     if (r.statusCode !== 200) {
       throw buildErrorObject(r);
     }
 
-    return JSON.parse(r.bodyString).data.projects;
+    return JSON.parse(r.bodyString);
   };
 
   dependencyLibrary.log = async function log(message, title = 'Log') {

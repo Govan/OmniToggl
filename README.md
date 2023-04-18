@@ -29,7 +29,8 @@ When you highlight a task in OmniFocus and then kick off this automation, a time
 ![Omnifocus Dialog](img/Screenshot-4.png)
 7. Open `Resources/common.js` in your favourite text editor
 ![Omnifocus Dialog](img/Screenshot-6.png)
-8. Replace 'REPLACE_ME' with you toggl API Token that can be found [here](https://track.toggl.com/profile)
+8. Replace 'REPLACE_ME' with your toggl API Token that can be found [here](https://track.toggl.com/profile)
+8. Replace 'REPLACE_ME_TOO' with your [toggl workspace id](https://developers.track.toggl.com/docs/workspace), you can lift this from most URLs in the webapp
 9. Quit and Restart OmniFocus
 9. You should now be all set up and can start a timer by clicking on a task and choosing Automation > OmniToggle > Start Timer from the menu.
 
