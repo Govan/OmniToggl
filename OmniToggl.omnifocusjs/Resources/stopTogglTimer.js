@@ -11,7 +11,8 @@
     try {
       const currentTimer = await getCurrentTogglTimer();
       if (currentTimer) {
-        await stopTogglTimer(currentTimer.id);
+        const r = await stopTogglTimer(currentTimer.id);
+        console.log('Timer started stopped', JSON.stringify(r));
       }
       resetTasks();
     } catch (e) {

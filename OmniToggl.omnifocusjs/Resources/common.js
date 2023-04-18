@@ -116,7 +116,7 @@
       throw buildErrorObject(r);
     }
 
-    return JSON.parse(r.bodyString).data;
+    return JSON.parse(r.bodyString);
   };
 
   dependencyLibrary.createTogglProject = async function createTogglProject(
