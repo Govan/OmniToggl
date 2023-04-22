@@ -19,8 +19,8 @@ When you highlight a task or project in OmniFocus and then kick off this automat
 - A Toggl Account [Sign up here](https://track.toggl.com/timer)
 
 ## How to install on Mac
-1. Download latest release from [here](https://github.com/benhughes/OmniToggl/releases)
-2. Unzip and open the file called `OmniToggl.omnifocusjs` this should open the file in OmniFocus
+1. Clone the repo
+2. Open the file called `OmniToggl.omnifocusjs` this should open the file in OmniFocus
 3. Choose if you would like to install on Mac (to only use locally) or "OmniFocus in iCloud Drive" (to make it available across platforms (including iPhone and iPad)
 ![Omnifocus Dialog](img/Screenshot-1.png)
 4. Choose Automation > Configure in the menu
