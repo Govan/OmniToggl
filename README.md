@@ -7,10 +7,11 @@ A omnifocus plugin to seamlessly start and stop [Toggl](https://track.toggl.com/
 ![Example](img/Dec-29-2020-18-58-28.gif)
 
 
-When you highlight a task in OmniFocus and then kick off this automation, a timer will be started with:
-- Description as the name of the task
+When you highlight a task or project in OmniFocus and then kick off this automation, a timer will be started with:
+- Description as the name of the task or project
 - Tags copied over from OmniFocus
-- Project used from the task the project is contained in within OmniFocus. The script will create a new Project if the project doesn't exist in Toggl.
+- Project used from the task the project is contained in, or the project itself, within OmniFocus. The script will create a new Project if the project doesn't exist in Toggl.
+- A tag of `<x>m` where `x` is the duration in minutes, a default of `15m` applies to any item with no duration - I use this as part of my [Huginn](https://github.com/huginn/huginn) setup.
 
 ## Requriements
 - Omnifocus Pro with Automation activated
@@ -30,8 +31,8 @@ When you highlight a task in OmniFocus and then kick off this automation, a time
 7. Open `Resources/common.js` in your favourite text editor
 ![Omnifocus Dialog](img/Screenshot-6.png)
 8. Replace 'REPLACE_ME' with your toggl API Token that can be found [here](https://track.toggl.com/profile)
-8. Replace 'REPLACE_ME_TOO' with your [toggl workspace id](https://developers.track.toggl.com/docs/workspace), you can lift this from most URLs in the webapp
-9. Quit and Restart OmniFocus
-9. You should now be all set up and can start a timer by clicking on a task and choosing Automation > OmniToggle > Start Timer from the menu.
+9. Replace 'REPLACE_ME_TOO' with your [workspace id](https://developers.track.toggl.com/docs/workspace)
+10. Quit and Restart OmniFocus
+11. You should now be all set up and can start a timer by clicking on a task and choosing Automation > OmniToggle > Start Timer from the menu.
 
 Note: if anyone knows of a way to store data other then having to edit a file as described then please let me know as it seems it should be easier then this but the documentation is not great.
